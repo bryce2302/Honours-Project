@@ -1,117 +1,191 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=utf-8 />
-<title>Time slider data</title>
-<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-
-	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="js/jquery.nouislider.min.js"></script>
-     
-	<script src="data/sliderDataUnix.js"></script>
-
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-
-	<link rel="stylesheet" href="css/jquery.nouislider.min.css" />
-
-
+<meta charset="utf-8" />
+<title>Create a time slider</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://unpkg.com/maplibre-gl@2.1.1/dist/maplibre-gl.js"></script>
+<link href="https://unpkg.com/maplibre-gl@2.1.1/dist/maplibre-gl.css" rel="stylesheet" />
 <style>
-  body { margin:0; padding:0; }
-  #map { position:absolute; top:0; bottom:0; width:100%; }
-
-  #slider {position: absolute; bottom: 50px; left: 50px; width: 300px}
+	body { margin: 0; padding: 0; }
+	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
 </style>
 </head>
 <body>
-
-<div id='map'></div>
-
-<div class="noUi-base" id="slider"></div>
-
+<style>
+.map-overlay {
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+position: absolute;
+width: 25%;
+top: 0;
+left: 0;
+padding: 10px;
+}
+ 
+.map-overlay .map-overlay-inner {
+background-color: #fff;
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+border-radius: 3px;
+padding: 10px;
+margin-bottom: 10px;
+}
+ 
+.map-overlay h2 {
+line-height: 24px;
+display: block;
+margin: 0 0 10px;
+}
+ 
+.map-overlay .legend .bar {
+height: 10px;
+width: 100%;
+background: linear-gradient(to right, #fca107, #7f3121);
+}
+ 
+.map-overlay input {
+background-color: transparent;
+display: inline-block;
+width: 100%;
+position: relative;
+margin: 0;
+cursor: ew-resize;
+}
+</style>
+ 
+<div id="map"></div>
+ 
+<div class="map-overlay top">
+<div class="map-overlay-inner">
+<h2>Significant earthquakes in 2015</h2>
+<label id="month"></label>
+<input id="slider" type="range" min="0" max="11" step="1" value="0" />
+</div>
+</div>
+ 
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-
-function timestamp(str){
-    return new Date(str).getTime();   
-};
-
-$("#slider").noUiSlider({
-  start: [timestamp(1342060264), timestamp(1344371464)],
-  behaviour: 'drag',
-  connect: true,
-  range: {
-        min: timestamp(1342060264),
-        max: timestamp(1344371464)
-  }
+var map = new maplibregl.Map({
+container: 'map',
+style:
+'https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+center: [31.4606, 20.7927],
+zoom: 0.5
 });
-
-
-var geojsonMarkerOptions = {
-    radius: 6,
-    fillColor: "#ff7800",
-    color: "#000",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8
-};
-
-
-var map = L.map('map').setView([-36.357728,147.390058], 13);
-
-L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
-
-      var testlayer = L.geoJson(data, {
-          pointToLayer: function (feature, latlng) {
-                  return L.circleMarker(latlng, geojsonMarkerOptions);
-              },
-    		 filter: function(feature, layer) {
-    		        return (feature.properties.unixtime <= 1344371464) && (feature.properties.unixtime >= 1342060264);
-    		    }
-      });
-
-    var polyline = L.polyline([], {
-    color: '#ff7800'}).addTo(map);
-
-    group = L.featureGroup([testlayer]).addTo(map);
-
-    testlayer.eachLayer(function(l) {
-    polyline.addLatLng(l.getLatLng());
-    });
-
-    map.fitBounds(group.getBounds());
-
-$( "#slider" ).click(function( event ) {
-
-  range = $("#slider").val();
-
-  rangeMin = range.slice(0,1).toString().slice(0,10);
-  rangeMax = range.slice(1).toString().slice(0,10);
-   
-  group.clearLayers();
-  map.removeLayer(polyline);
-
-
-  newlayer = L.geoJson(data, {
-      pointToLayer: function (feature, latlng) {
-              return L.circleMarker(latlng, geojsonMarkerOptions);
-          },
-      filter: function(feature, layer) {
-            return (feature.properties.unixtime <= rangeMax) && (feature.properties.unixtime >= rangeMin);
-          }
-      });
-
-  var polyline2 = L.polyline([], {
-    color: '#ff7800'});
-
-  newlayer.eachLayer(function(l) {
-    polyline2.addLatLng(l.getLatLng());
-    });
-    group = L.featureGroup().addLayer(newlayer).addLayer(polyline2);
-    group.addTo(map);
-  
- });
-
+ 
+var months = [
+'January',
+'February',
+'March',
+'April',
+'May',
+'June',
+'July',
+'August',
+'September',
+'October',
+'November',
+'December'
+];
+ 
+function filterBy(month) {
+var filters = ['==', 'month', month];
+map.setFilter('earthquake-circles', filters);
+map.setFilter('earthquake-labels', filters);
+ 
+// Set the label to the month
+document.getElementById('month').textContent = months[month];
+}
+ 
+map.on('load', function () {
+// Data courtesy of http://earthquake.usgs.gov/
+// Query for significant earthquakes in 2015 URL request looked like this:
+// http://earthquake.usgs.gov/fdsnws/event/1/query
+//    ?format=geojson
+//    &starttime=2015-01-01
+//    &endtime=2015-12-31
+//    &minmagnitude=6'
+//
+// Here we're using d3 to help us make the ajax request but you can use
+// Any request method (library or otherwise) you wish.
+d3.json(
+'https://maplibre.org/maplibre-gl-js-docs/assets/significant-earthquakes-2015.geojson',
+function (err, data) {
+if (err) throw err;
+ 
+// Create a month property value based on time
+// used to filter against.
+data.features = data.features.map(function (d) {
+d.properties.month = new Date(d.properties.time).getMonth();
+return d;
+});
+ 
+map.addSource('earthquakes', {
+'type': 'geojson',
+data: data
+});
+ 
+map.addLayer({
+'id': 'earthquake-circles',
+'type': 'circle',
+'source': 'earthquakes',
+'paint': {
+'circle-color': [
+'interpolate',
+['linear'],
+['get', 'mag'],
+6,
+'#FCA107',
+8,
+'#7F3121'
+],
+'circle-opacity': 0.75,
+'circle-radius': [
+'interpolate',
+['linear'],
+['get', 'mag'],
+6,
+20,
+8,
+40
+]
+}
+});
+ 
+map.addLayer({
+'id': 'earthquake-labels',
+'type': 'symbol',
+'source': 'earthquakes',
+'layout': {
+'text-field': [
+'concat',
+['to-string', ['get', 'mag']],
+'m'
+],
+'text-font': [
+'Open Sans Bold',
+'Arial Unicode MS Bold'
+],
+'text-size': 12
+},
+'paint': {
+'text-color': 'rgba(0,0,0,0.5)'
+}
+});
+ 
+// Set filter to first month of the year
+// 0 = January
+filterBy(0);
+ 
+document
+.getElementById('slider')
+.addEventListener('input', function (e) {
+var month = parseInt(e.target.value, 10);
+filterBy(month);
+});
+}
+);
+});
 </script>
+ 
 </body>
 </html>
