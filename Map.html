@@ -90,15 +90,15 @@
 
 
                 /* Marker layers */
-                var marker1 = L.marker([57.1190254259, -2.13552223973],{icon:leafletIcon}).bindPopup('This is marker1'),
+                var trafficMarker1 = L.marker([57.1190254259, -2.13552223973],{icon:leafletIcon}).bindPopup('This is marker1'),
 
-                marker2 = L.marker([57.1190254259, -2.13052223973],{icon:leafletIcon}).bindPopup('This is marker2'),
+                trafficMarker2 = L.marker([57.1190254259, -2.13052223973],{icon:leafletIcon}).bindPopup('This is marker2'),
 
-                marker3 = L.marker([57.1190254259, -2.12552223973],{icon:leafletIcon}).bindPopup('This is marker3'),
+                trafficMarker3 = L.marker([57.1190254259, -2.12552223973],{icon:leafletIcon}).bindPopup('This is marker3'),
 
-                marker4 = L.marker([57.1190254259, -2.12052223973],{icon:leafletIcon}).bindPopup('This is marker4');
+                trafficMarker4 = L.marker([57.1190254259, -2.12052223973],{icon:leafletIcon}).bindPopup('This is marker4');
 
-                var circleMarker = L.circle ([57.1190254259, -2.13552223973],{
+                var airQualitiyMarker = L.circle ([57.1190254259, -2.13552223973],{
                     color: 'green',
                     fillColor: 'green',
                     fillOpacity: 0.5,
@@ -107,13 +107,13 @@
 
                 
                 /*layer groups */
-                var testMarkers = L.layerGroup([marker1, marker2, marker3, marker4]);
+                var traffic = L.layerGroup([trafficMarker1, trafficMarker2, trafficMarker3, trafficMarker4]);
 
-                var circle = L.layerGroup([circleMarker]);
+                var airQualitiy = L.layerGroup([airQualitiyMarker]);
                
                 var overlays = {
-                  "Test Markers": testMarkers,
-                  "Circles": circle,
+                  "Traffic": traffic,
+                  "Air Qualitiy": airQualitiy,
                 }
 
                 //Add layer control 
@@ -167,7 +167,7 @@
   <!-- Copyright -->
   <div class="footer-copyright text-center py-3">
     © 2022,
-    <a href="Index.html"> Aberdeen Traffic Viwer</a>
+    <a href="Index.html"> Aberdeen Traffic Viewer</a>
   </div> 
 </footer>
 <!-- Footer End -->
