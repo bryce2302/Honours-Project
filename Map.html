@@ -8,12 +8,9 @@
   <title>Aberdeen Traffic Viewer</title>
 
 <!--- Styles -->
-  <link rel="stylesheet" href="nouislider.css">
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/
-  css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   
 
@@ -26,7 +23,12 @@
   <link href="https://unpkg.com/maplibre-gl@2.1.1/dist/maplibre-gl.css" rel="stylesheet" />
 
   <script src = "slider.js"></script>
-  <script src = "nouislider.js"></script>
+  <script src="leaflet-heat.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+  <script src="leaflet-heat.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
 
 </head>
 
@@ -67,7 +69,7 @@
               <p><a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a></p>
               
               <script>
-
+ 
 
 
                 var map = L.map('map').setView([57.1190254259, -2.13552223973], 1);
@@ -78,7 +80,8 @@
                   attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
                   crossOrigin: true
                 }).addTo(map);
-          
+
+               
                 var leafletIcon = L.icon ({
                   iconUrl : 'carMarker.png',
                   iconSize: [38,50]
@@ -86,38 +89,71 @@
                 })
 
                 map.setView(new L.LatLng(57.1190254259, -2.12552223973), 12);
+                
                 var slider = document.getElementById('slider');
 
+              
 
-                /* Marker layers */
-                var trafficMarker1 = L.marker([57.1190254259, -2.13552223973],{icon:leafletIcon}).bindPopup('This is marker1'),
+                  // Read markers data from data.csv
+                  $.get('./Flow data - Union St/test.csv', function(csvString) {
 
-                trafficMarker2 = L.marker([57.1190254259, -2.13052223973],{icon:leafletIcon}).bindPopup('This is marker2'),
+                  // Use PapaParse to convert string to array of objects
+                  var data = Papa.parse(csvString, {header: true, dynamicTyping: true}).data;
 
-                trafficMarker3 = L.marker([57.1190254259, -2.12552223973],{icon:leafletIcon}).bindPopup('This is marker3'),
+                  // For each row in data, create a marker and add it to the map
+                  // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
+                  for (var i in data) {
+                    var row = data[i];
 
-                trafficMarker4 = L.marker([57.1190254259, -2.12052223973],{icon:leafletIcon}).bindPopup('This is marker4');
+                    var heat = L.heatLayer([row.Latitude, row.Longitude, row.Amount], {
+                    radius: 25,
+                    gradient : {0.4: 'blue', 0.5: 'lime', 0.6: 'red'},
+                    minOpacity : 0.23,
+                    })
+                    
+                  }
 
-                var airQualitiyMarker = L.circle ([57.1190254259, -2.13552223973],{
+                  // var heat = L.heatLayer([
+                  //   [57.1190254259, -2.13552223973, 0.2], // lat, lng, intensity
+                  //   [57.1190254259, -2.14552223973, 0.3],
+                  //   [57.1190254259, -2.15552223973, 0.4],
+                  //   [57.1190254259, -2.16552223973, 0.5],
+                  //   ], {
+                  //   radius: 25,
+                  //   gradient : {0.4: 'blue', 0.5: 'lime', 0.6: 'red'},
+                  //   minOpacity : 0.23,
+                  // })
+
+
+
+                var airQualitiyMarker1 = L.circle ([57.1190254259, -2.13552223973],{
                     color: 'green',
                     fillColor: 'green',
                     fillOpacity: 0.5,
                     radius: 500
                 })
 
-                
-                /*layer groups */
-                var traffic = L.layerGroup([trafficMarker1, trafficMarker2, trafficMarker3, trafficMarker4]);
+                var airQualitiyMarker2 = L.circle ([57.1290254259, -2.13552223973],{
+                    color: 'green',
+                    fillColor: 'green',
+                    fillOpacity: 0.5,
+                    radius: 500
+                })
+                var airQualitiy = L.layerGroup([airQualitiyMarker1,airQualitiyMarker2]);
+  
 
-                var airQualitiy = L.layerGroup([airQualitiyMarker]);
-               
+
                 var overlays = {
-                  "Traffic": traffic,
+                  "Traffic": heat,
                   "Air Qualitiy": airQualitiy,
                 }
 
+
                 //Add layer control 
                 L.control.layers(null, overlays).addTo(map);
+
+});
+
                
 
             </script>

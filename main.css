@@ -17,9 +17,12 @@ footer {
   }
 
 
-#homepageStyle {
+#homepageStyle p{
       text-align: center;
+font-size: 20px;
   }
+
+
 
 
 /* map css */
