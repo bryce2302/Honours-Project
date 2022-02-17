@@ -20,8 +20,7 @@ css/font-awesome.min.css">
 </head>
 
 
-
-<body>
+<body id="body">
 
     <!--NavBar-->
 
@@ -31,7 +30,18 @@ css/font-awesome.min.css">
         <!-- Links -->
         <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
         <a href="map.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Map</a>
+        <button onclick="darkMode()" id="darkButton">Darkmode</button>
     </nav>
+
+
+
+    <script>
+        function darkMode() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+
+        }
+    </script>
 
     <hr>
 
