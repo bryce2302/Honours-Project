@@ -90,7 +90,6 @@
               var slider = document.getElementById('slider');
 
 
-
               // Read markers data from data.csv
               $.get('./Flow data - Union St/Test/combined-csv-files.csv', function (csvString) {
 
@@ -99,21 +98,30 @@
 
                 // For each row in data, create a marker and add it to the map
                 // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
-                var points = [];
-                var date = [];
+                points = [];
+                date = [];
 
                 for (var i in data) {
                   var row = data[i];
                   if (row.Latitude) {
                     console.table(data[i]);
 
+
                     var lat = parseFloat(row.Latitude);
                     var lng = parseFloat(row.Longitude);
                     var amt = parseFloat(row.Amount);
+
+
+                    
                     var dates = row.Date
 
                     points.push([lat, lng, amt]);
-                    date.push([date])
+
+
+                    date.push([dates])
+
+                    
+
 
                   }
 
@@ -133,8 +141,6 @@
                   maxZoom: 15,
                 })
 
-
-                value = date
 
                 var airQualitiyMarker1 = L.circle([57.1190254259, -2.13552223973], {
                   color: 'green',
@@ -163,6 +169,49 @@
                 L.control.layers(null, overlays).addTo(map);
 
               });
+
+              //TEST FOR AIR QUALITY//
+
+              // Read markers data from data.csv
+              $.get('./Flow data - Union St/Test/Air_Quality.csv', function (csvString) {
+
+                // Use PapaParse to convert string to array of objects
+                var data = Papa.parse(csvString, { header: true, dynamicTyping: true }).data;
+
+                // For each row in data, create a marker and add it to the map
+                // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
+                airPoints = [];
+                
+
+                for (var i in data) {
+                  var row = data[i];
+                  if (row.Month) {
+                    console.table(data[i]);
+
+
+                    var airQualitiyMarker1 = L.circle([57.1190254259, -2.13552223973], {
+                  color: 'green',
+                  fillColor: 'green',
+                  fillOpacity: 0.5,
+                  radius: 500
+                })
+
+                var airQualitiyMarker2 = L.circle([57.1290254259, -2.13552223973], {
+                  color: 'green',
+                  fillColor: 'green',
+                  fillOpacity: 0.5,
+                  radius: 500
+                })
+                var airQualitiy = L.layerGroup([airQualitiyMarker1, airQualitiyMarker2]);
+
+
+
+
+                  }
+                }
+
+              });
+
 
 
 
