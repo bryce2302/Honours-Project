@@ -5,12 +5,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Aberdeen Traffic Viewer</title>
+
     <!--- Styles -->
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
+
+
+
+    <!-- Scrpts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
     <script src="https://unpkg.com/maplibre-gl@2.1.1/dist/maplibre-gl.js"></script>
     <link href="https://unpkg.com/maplibre-gl@2.1.1/dist/maplibre-gl.css" rel="stylesheet" />
@@ -18,6 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+
 </head>
 
 <body id="body">
@@ -32,6 +38,8 @@
     </nav>
 
     <hr>
+
+    <!-- Start Of conatiner for Map-->
     <div class="container" id="mapContainer">
         <div class="row">
             <div class="col-sm-12">
@@ -43,9 +51,11 @@
 
                         <p><a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a></p>
 
+                        <!-- Script for getting the map -->
                         <script>
                             var map = L.map('map').setView([57.1190254259, -2.13552223973], 1);
 
+                        //Adding tile layer
                             L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=anuDqwGFecEjGf461O6C', {
                                 tileSize: 512,
                                 zoomOffset: -1,
@@ -54,33 +64,44 @@
                                 crossOrigin: true
                             }).addTo(map);
 
+
+                            //Setting where the map sbegins at when loaded in 
                             map.setView(new L.LatLng(57.146522, -2.099081), 13);
                             var slider = document.getElementById('slider');
 
-                            // Read markers data from data.csv
+                            // Read markers data from combined-csv-files.csv
                             $.get('./Flow data - Union St/Test/combined-csv-files.csv', function(csvString) {
+
                                 // Use PapaParse to convert string to array of objects
                                 var data = Papa.parse(csvString, {
                                     header: true,
                                     dynamicTyping: true
                                 }).data;
+
                                 // For each row in data, create a marker and add it to the map
                                 // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
                                 points = [];
                                 date = [];
                                 for (var i in data) {
                                     var row = data[i];
+                                    //Check if the row conatisn a Latitude
                                     if (row.Latitude) {
                                         console.table(data[i]);
+                                        //Create three new variables to store the lat.long and amount from the csv at each row 
                                         var lat = parseFloat(row.Latitude);
                                         var lng = parseFloat(row.Longitude);
                                         var amt = parseFloat(row.Amount);
+
+                                        //Trying to get the date from the CSV for the slider
                                         var dates = row.Date
+
+                                        //push these to the points array
                                         points.push([lat, lng, amt]);
                                         date.push([dates])
                                     }
                                 }
 
+                                //Setting parameters for the heat map
                                 var heat = L.heatLayer(points, {
                                     gradient: {
                                         0.00: 'rgb(0,0,255)',
@@ -97,6 +118,7 @@
 
                                 })
 
+                                //Initial Air quality markers, will be chnaged later in implementaion
                                 var airQualitiyMarker1 = L.circle([57.1190254259, -2.13552223973], {
                                     color: 'green',
                                     fillColor: 'green',
@@ -111,7 +133,10 @@
                                     radius: 500
                                 })
 
+                                //Craete layer group for the air quality 
                                 var airQualitiy = L.layerGroup([airQualitiyMarker1, airQualitiyMarker2]);
+
+                                //Assign the heat markers adn air quality to the layer control
                                 var overlays = {
                                     "Traffic": heat,
                                     "Air Qualitiy": airQualitiy,
@@ -123,7 +148,7 @@
                             });
 
 
-                            //TEST FOR AIR QUALITY//
+                            ///////////////TEST FOR AIR QUALITY FROM AIR QUALITY CSV ////////////
                             // Read markers data from data.csv
                             $.get('./Flow data - Union St/Test/Air_Quality.csv', function(csvString) {
                                 // Use PapaParse to convert string to array of objects
@@ -154,12 +179,15 @@
                                     }
                                 }
                             });
+                            ////////////////////////////////////////////////////////////////////////////////
+
                         </script>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Slider implementaion-->
         <div class="row" id=pRow>
             <p>Select date to view data</p>
             <div class="col-sm-12">
