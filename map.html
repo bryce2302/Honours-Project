@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
 
+    <link href="dist/nouislider.min.css" rel="stylesheet">
+    <script src="dist/nouislider.js"></script>
 
 
     <!-- Scrpts -->
@@ -47,15 +49,19 @@
                     <div id="map">
                         <hr>
 
-                        <a href="https://www.maptiler.com" style="position:absolute;left:10;bottom:10px;z-index:999;"><img src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
+                        <a href="https://www.maptiler.com"
+                            style="position:absolute;left:10;bottom:10px;z-index:999;"><img
+                                src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
 
-                        <p><a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a></p>
+                        <p><a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a
+                                href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap
+                                contributors</a></p>
 
                         <!-- Script for getting the map -->
                         <script>
                             var map = L.map('map').setView([57.1190254259, -2.13552223973], 1);
 
-                        //Adding tile layer
+                            //Adding tile layer
                             L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=anuDqwGFecEjGf461O6C', {
                                 tileSize: 512,
                                 zoomOffset: -1,
@@ -70,7 +76,7 @@
                             var slider = document.getElementById('slider');
 
                             // Read markers data from combined-csv-files.csv
-                            $.get('./Flow data - Union St/Test/combined-csv-files.csv', function(csvString) {
+                            $.get('./Flow data - Union St/Test/combined-csv-files.csv', function (csvString) {
 
                                 // Use PapaParse to convert string to array of objects
                                 var data = Papa.parse(csvString, {
@@ -150,7 +156,7 @@
 
                             ///////////////TEST FOR AIR QUALITY FROM AIR QUALITY CSV ////////////
                             // Read markers data from data.csv
-                            $.get('./Flow data - Union St/Test/Air_Quality.csv', function(csvString) {
+                            $.get('./Flow data - Union St/Test/Air_Quality.csv', function (csvString) {
                                 // Use PapaParse to convert string to array of objects
                                 var data = Papa.parse(csvString, {
                                     header: true,
@@ -181,24 +187,52 @@
                             });
                             ////////////////////////////////////////////////////////////////////////////////
 
+
+
                         </script>
                     </div>
                 </div>
             </div>
+
+
+            <!-- Better date slider-->
+            <p>&nbsp</p>
+            <p>&nbsp</p>
+            <div id="slider"></div>
+            <script>
+                var slider = document.getElementById('slider');
+                noUiSlider.create(slider, {
+                    start: 1,
+                    tooltips: true,
+                    connect: 'lower',
+                    range: {
+                        'min': 0,
+                        'max': 8
+                    }
+                });
+            </script>
+
         </div>
 
-        <!-- Slider implementaion-->
-        <div class="row" id=pRow>
-            <p>Select date to view data</p>
-            <div class="col-sm-12">
-                <div class="w3-content" id="sliderStyle">
-                    <br>
-                    <input type="range" min="1" max="100" value="1" id="myRange" class="slider" style="left:50px;top:1px;z-index:999;">
-                    <hr>
-                </div>
-            </div>
-        </div>
     </div>
+
+
+
+    <p>&nbsp;</p>
+    <div id="slider"></div>
+    <script>
+        var slider = document.getElementById('slider');
+        noUiSlider.create(slider, {
+            start: 1,
+            tooltips: true,
+            connect: 'lower',
+            range: {
+                'min': 0,
+                'max': 8
+            }
+        });
+    </script>
+
 
     <footer class="page-footer">
         <!-- Footer Content-->
