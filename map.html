@@ -56,6 +56,8 @@
                                 href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap
                                 contributors</a></p>
 
+
+
                         <!-- Script for getting the map -->
                         <script>
                             var map = L.map('map').setView([57.1190254259, -2.13552223973], 1);
@@ -150,6 +152,21 @@
                                 //Add layer control 
                                 L.control.layers(null, overlays).addTo(map);
 
+
+
+
+
+
+                                var slider = document.getElementById('slider');
+                                noUiSlider.create(slider, {
+                                    start: 1,
+                                    tooltips: true,
+                                    connect: 'lower',
+                                    range: {
+                                        'min': 0,
+                                        'max': 10
+                                    }
+                                });
                             });
 
 
@@ -182,7 +199,7 @@
                                             fillOpacity: 0.5,
                                             radius: 500
                                         })
-                                        
+
                                         var airQualitiy = L.layerGroup([airQualitiyMarker1, airQualitiyMarker2]);
                                     }
                                 }
@@ -195,26 +212,14 @@
                     </div>
                 </div>
             </div>
+            <p>spacing</p>
+            <p>spacing</p>
+        <div id="slider"></div>
 
 
-            <!-- Better date slider-->
-            <p>&nbsp</p>
-            <p>&nbsp</p>
-            <div id="slider"></div>
-            <script>
-                var slider = document.getElementById('slider');
-                noUiSlider.create(slider, {
-                    start: 1,
-                    tooltips: true,
-                    connect: 'lower',
-                    range: {
-                        'min': 0,
-                        'max': 8
-                    }
-                });
-            </script>
 
-        </div>
+
+    </div>
 
     </div>
 
