@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link href="dist/nouislider.min.css" rel="stylesheet">
+    <script src="dist/nouislider.js"></script>
+
+    <script src="dist/wNumb.js"></script>
+    <script src="dist/wNumb.min.js"></script>
+
+</head>
+
+
+<body>
+
+    <h1>My First Heading</h1>
+
+    <p>My first paragraph.</p>
+
+
+    <script>
+
+        var dateSlider = document.getElementById('slider-date');
+
+        function timestamp(str) {
+            return new Date(str).getTime();
+        }
+
+        noUiSlider.create(dateSlider, {
+            // Create two timestamps to define a range.
+            range: {
+                min: timestamp('2010'),
+                max: timestamp('2016')
+            },
+
+            // Steps of one week
+            step: 7 * 24 * 60 * 60 * 1000,
+
+            // Two more timestamps indicate the handle starting positions.
+            start: [timestamp('2011'), timestamp('2015')],
+
+            // No decimals
+            format: wNumb({
+                decimals: 0
+            })
+        });
+        var dateValues = [
+            document.getElementById('event-start'),
+            document.getElementById('event-end')
+        ];
+
+        var formatter = new Intl.DateTimeFormat('en-GB', {
+            dateStyle: 'full'
+        });
+
+        dateSlider.noUiSlider.on('update', function (values, handle) {
+            dateValues[handle].innerHTML = formatter.format(new Date(+values[handle]));
+        });
+
+    </script>
+
+</body>
+
+</html>
