@@ -169,18 +169,21 @@
                                     var row = data[i];
                                     if (row.Month) {
                                         console.table(data[i]);
+
                                         var airQualitiyMarker1 = L.circle([57.1190254259, -2.13552223973], {
                                             color: 'green',
                                             fillColor: 'green',
                                             fillOpacity: 0.5,
                                             radius: 500
                                         })
+
                                         var airQualitiyMarker2 = L.circle([57.1290254259, -2.13552223973], {
                                             color: 'green',
                                             fillColor: 'green',
                                             fillOpacity: 0.5,
                                             radius: 500
                                         })
+                                        
                                         var airQualitiy = L.layerGroup([airQualitiyMarker1, airQualitiyMarker2]);
                                     }
                                 }
@@ -216,22 +219,6 @@
 
     </div>
 
-
-
-    <p>&nbsp;</p>
-    <div id="slider"></div>
-    <script>
-        var slider = document.getElementById('slider');
-        noUiSlider.create(slider, {
-            start: 1,
-            tooltips: true,
-            connect: 'lower',
-            range: {
-                'min': 0,
-                'max': 8
-            }
-        });
-    </script>
 
 
     <footer class="page-footer">
