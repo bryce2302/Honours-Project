@@ -117,6 +117,8 @@
                                     radius: 50
 
                                 })
+                                draw(heat)
+                            });
 
 
                                 // ///////////////TEST FOR AIR QUALITY FROM AIR QUALITY CSV ////////////
@@ -150,6 +152,11 @@
                                 //         radius: 500
                                 //     })
                                 // });
+
+
+                                    function draw (heat){
+
+                                    
 
                                 //Initial Air quality markers, will be chnaged later in implementaion
                                 var airQualitiyMarker1 = L.circle([57.1190254259, -2.13552223973], {
@@ -188,8 +195,11 @@
                                         'min': 0,
                                         'max': 10
                                     }
+
+
                                 });
-                            });
+                         
+                                    }
 
 
                         </script>
