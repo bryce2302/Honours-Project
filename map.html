@@ -68,7 +68,7 @@
 
                             //Setting where the map begins at when loaded in 
                             map.setView(new L.LatLng(57.146522, -2.099081), 13);
-                            var slider = document.getElementById('slider');
+                            
 
                             // Read markers data from combined-csv-files.csv
                             $.get('./Flow data - Union St/Test/combined-csv-files.csv', function (csvString) {
@@ -155,7 +155,7 @@
                                 draw(airQualitiy)
                             });
 
-
+                            
                             
                            
                             function draw(heat, airQualitiy) {
@@ -167,7 +167,7 @@
                                 //     radius: 500
                                 // })
 
-                                // var airQualitiyMarker2 = L.circle([57.1290254259, -2.13552223973], {
+                                // var airQualitiy= L.circle([57.1290254259, -2.13552223973], {
                                 //     color: 'green',
                                 //     fillColor: 'green',
                                 //     fillOpacity: 0.5,
@@ -178,6 +178,7 @@
                                 // var airQualitiy = L.layerGroup(airQualitiy);
 
                                 //Assign the heat markers adn air quality to the layer control
+                                
                                 var overlays = {
                                     "Traffic": heat,
                                     "Air Qualitiy": airQualitiy,
