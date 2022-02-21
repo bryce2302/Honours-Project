@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
 
@@ -65,9 +66,46 @@
                             }).addTo(map);
 
 
-                            //Setting where the map sbegins at when loaded in 
+                            //Setting where the map begins at when loaded in 
                             map.setView(new L.LatLng(57.146522, -2.099081), 13);
                             var slider = document.getElementById('slider');
+
+
+
+                            ///////////////TEST FOR AIR QUALITY FROM AIR QUALITY CSV ////////////
+                            // Read markers data from data.csv
+                            $.get('./Flow data - Union St/Test/airQuality.csv', function (csvString) {
+
+                                // Use PapaParse to convert string to array of objects
+                                var data = Papa.parse(csvString, {
+                                    header: true,
+                                    dynamicTyping: true
+                                }).data;
+
+                                // For each row in data, create a marker and add it to the map
+                                // For each row, columns `Latitude`, `Longitude` are required
+                                points = [];
+                                for (var i in data) {
+                                    var row = data[i];
+
+                                    if (row.Latitude) {
+                                        var airLat = parseFloat(row.Latitude);
+                                        var airLng = parseFloat(row.Longitude);
+                                        console.table(data[i]);
+
+                                        points.push([airLat,airLng])
+                                    }
+                                }
+                                  //Setting parameters for the air quality map
+                                var airQualitiy = L.circle(points, {
+                                    color: 'green',
+                                    fillColor: 'green',
+                                    fillOpacity: 0.5,
+                                    radius: 5000
+                                })
+                                draw(airQualitiy)
+                            });
+
 
                             // Read markers data from combined-csv-files.csv
                             $.get('./Flow data - Union St/Test/combined-csv-files.csv', function (csvString) {
@@ -118,63 +156,28 @@
 
                                 })
                                 draw(heat)
+                                addLayer(layer,true)
                             });
 
+                           
+                            function draw(heat, airQualitiy) {
+                                // //Initial Air quality markers, will be chnaged later in implementaion
+                                // var airQualitiyMarker1 = L.circle([57.1190254259, -2.13552223973], {
+                                //     color: 'green',
+                                //     fillColor: 'green',
+                                //     fillOpacity: 0.5,
+                                //     radius: 500
+                                // })
 
-                                // ///////////////TEST FOR AIR QUALITY FROM AIR QUALITY CSV ////////////
-                                // // Read markers data from data.csv
-                                // $.get('./Flow data - Union St/Test/Air_Quality.csv', function (csvString) {
-
-                                //     // Use PapaParse to convert string to array of objects
-                                //     var dataAir = Papa.parse(csvString, {
-                                //         header: true,
-                                //         dynamicTyping: true
-                                //     }).dataAir;
-
-                                //     // For each row in data, create a marker and add it to the map
-                                //     // For each row, columns `Latitude`, `Longitude` are required
-                                //     airPoints = [];
-                                //     for (var i in dataAir) {
-                                //         var airRow = dataAir[i];
-                                //         if (airRow.Latitude) {
-
-                                //             var airLat = parseFloat(row.Latitude);
-                                //             var airLng = parseFloat(row.Longitude);
-
-                                //             airPoints.push([airLat, airLng]);
-                                //         }
-                                //     }
-                                //     //Craete layer group for the air quality 
-                                //     airQualitiy = L.circle(airPoints, {
-                                //         color: 'green',
-                                //         fillColor: 'green',
-                                //         fillOpacity: 0.5,
-                                //         radius: 500
-                                //     })
-                                // });
-
-
-                                    function draw (heat){
-
-                                    
-
-                                //Initial Air quality markers, will be chnaged later in implementaion
-                                var airQualitiyMarker1 = L.circle([57.1190254259, -2.13552223973], {
-                                    color: 'green',
-                                    fillColor: 'green',
-                                    fillOpacity: 0.5,
-                                    radius: 500
-                                })
-
-                                var airQualitiyMarker2 = L.circle([57.1290254259, -2.13552223973], {
-                                    color: 'green',
-                                    fillColor: 'green',
-                                    fillOpacity: 0.5,
-                                    radius: 500
-                                })
+                                // var airQualitiyMarker2 = L.circle([57.1290254259, -2.13552223973], {
+                                //     color: 'green',
+                                //     fillColor: 'green',
+                                //     fillOpacity: 0.5,
+                                //     radius: 500
+                                // })
 
                                 //Craete layer group for the air quality 
-                                var airQualitiy = L.layerGroup([airQualitiyMarker1, airQualitiyMarker2]);
+                                // var airQualitiy = L.layerGroup(airQualitiy);
 
                                 //Assign the heat markers adn air quality to the layer control
                                 var overlays = {
@@ -185,7 +188,7 @@
                                 //Add layer control 
                                 L.control.layers(null, overlays).addTo(map);
 
-
+                                addLayer(layer,true)
                                 var slider = document.getElementById('slider');
                                 noUiSlider.create(slider, {
                                     start: 1,
@@ -195,11 +198,9 @@
                                         'min': 0,
                                         'max': 10
                                     }
-
-
                                 });
-                         
-                                    }
+
+                            }
 
 
                         </script>
