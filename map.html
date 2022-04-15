@@ -177,13 +177,13 @@
                                 //Craete layer group for the air quality 
                                 var airQualitiy = L.layerGroup(airQualitiy);
 
-                               // Assign the heat markers adn air quality to the layer control
+                                // Assign the heat markers adn air quality to the layer control
                                 
                                 var overlays = {
                                     "Traffic": heat,
                                     "Air Qualitiy": airQualitiy,
                                 }
-
+ 
                                 //Add layer control 
                                 L.control.layers(null, overlays).addTo(map);
 
