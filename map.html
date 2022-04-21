@@ -70,8 +70,55 @@
                             map.setView(new L.LatLng(57.146522, -2.099081), 13);
                             
 
-                            // Read markers data from combined-csv-files.csv
-                            $.get('./Flow data - Union St/Test/combined-csv-files.csv', function (csvString) {
+                                // Read markers data from combined-csv-files.csv
+                                $.get('./Flow data - Union St/2019/combine.csv', function (csvString) {
+
+                                    // Use PapaParse to convert string to array of objects
+                                    var data = Papa.parse(csvString, {
+                                        header: true,
+                                        dynamicTyping: true
+                                    }).data;
+
+                                    // For each row in data, create a marker and add it to the map
+                                    // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
+                                    heat1Points = [];
+                                    for (var i in data) {
+                                        var row = data[i];
+                                        //Check if the row conatisn a Latitude
+                                        if (row.Latitude) {
+                                            console.table(data[i]);
+                                        
+                                            //Create three new variables to store the lat.long and amount from the csv at each row 
+                                            var lat = parseFloat(row.Latitude);
+                                            var lng = parseFloat(row.Longitude);
+                                            var amt = parseFloat(row.Amount);
+                                    
+                                        
+                                            //push these to the points array
+                                            heat1Points.push([lat, lng, amt]);
+           
+                                        }
+                                    }
+
+                                    var heat1 = L.heatLayer(heat1Points, {
+                                        gradient: {
+                                                0.00: 'rgb(0,0,255)',
+                                                0.25: 'rgb(0,0,255)',
+                                                0.50: 'rgb(0,255,0)',
+                                                0.75: 'rgb(255,255,0)',
+                                                1.00: 'rgb(255,0,0)'
+                                            },
+                                            opacity: 50,
+                                            blur: 15,
+                                            maxZoom: 15,
+                                            max: 250000,
+                                            radius: 50
+                                        })
+                                        draw(heat1)
+                                });
+
+                                // Read markers data from combined-csv-files.csv
+                                $.get('./Flow data - Union St/2020/combined-csv-files.csv', function (csvString) {
 
                                 // Use PapaParse to convert string to array of objects
                                 var data = Papa.parse(csvString, {
@@ -81,131 +128,78 @@
 
                                 // For each row in data, create a marker and add it to the map
                                 // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
-                                points = [];
-                                date = [];
+                                heat2Points = [];
                                 for (var i in data) {
                                     var row = data[i];
                                     //Check if the row conatisn a Latitude
                                     if (row.Latitude) {
                                         console.table(data[i]);
+                                    
                                         //Create three new variables to store the lat.long and amount from the csv at each row 
                                         var lat = parseFloat(row.Latitude);
                                         var lng = parseFloat(row.Longitude);
                                         var amt = parseFloat(row.Amount);
 
-                                        //Trying to get the date from the CSV for the slider
-                                        var dates = row.Date
-
+                                    
                                         //push these to the points array
-                                        points.push([lat, lng, amt]);
-                                        date.push([dates])
+                                        heat2Points.push([lat, lng, amt]);
+
                                     }
                                 }
 
-                                //Setting parameters for the heat map
-                                var heat = L.heatLayer(points, {
+                                var heat2 = L.heatLayer(heat2Points, {
                                     gradient: {
-                                        0.00: 'rgb(0,0,255)',
-                                        0.25: 'rgb(0,0,255)',
-                                        0.50: 'rgb(0,255,0)',
-                                        0.75: 'rgb(255,255,0)',
-                                        1.00: 'rgb(255,0,0)'
-                                    },
-                                    opacity: 50,
-                                    blur: 15,
-                                    maxZoom: 15,
-                                    max: 250000,
-                                    radius: 50
-                                })
-                                draw(heat)
-                            });
+                                            0.00: 'rgb(0,0,255)',
+                                            0.25: 'rgb(0,0,255)',
+                                            0.50: 'rgb(0,255,0)',
+                                            0.75: 'rgb(255,255,0)',
+                                            1.00: 'rgb(255,0,0)'
+                                        },
+                                        opacity: 50,
+                                        blur: 15,
+                                        maxZoom: 15,
+                                        max: 250000,
+                                        radius: 50
+                                    })
+                                    draw(heat2)
+                                });
 
-
-                            // ///////////////TEST FOR AIR QUALITY FROM AIR QUALITY CSV ////////////
-                            // // Read markers data from data.csv
-                            // $.get('./Flow data - Union St/Test/airQuality.csv', function (csvString) {
-
-                            //     // Use PapaParse to convert string to array of objects
-                            //     var data = Papa.parse(csvString, {
-                            //         header: true,
-                            //         dynamicTyping: true
-                            //     }).data;
-
-                            //     // For each row in data, create a marker and add it to the map
-                            //     // For each row, columns `Latitude`, `Longitude` are required
-                            //     points = [];
-                            //     for (var i in data) {
-                            //         var row = data[i];
-
-                            //         if (row.Latitude) {
-                            //             var airLat = parseFloat(row.Latitude);
-                            //             var airLng = parseFloat(row.Longitude);
-                            //             console.table(data[i]);
-
-                            //             points.push([airLat,airLng])
-                            //         }
-                            //     }
-                            //       //Setting parameters for the air quality map
-                            //     var airQualitiy = L.circle(points, {
-                            //         color: 'green',
-                            //         fillColor: 'green',
-                            //         fillOpacity: 0.5,
-                            //         radius: 5000
-                            //     })
-                            //     draw(airQualitiy)
-                            // });
-
-                            
-                            
+                        
                            
-                            function draw(heat) {
-                                //Initial Air quality markers, will be chnaged later in implementaion
-                                var airQualitiyMarker1 = L.circle([57.1190254259, -2.13552223973], {
-                                    color: 'green',
-                                    fillColor: 'green',
-                                    fillOpacity: 0.5,
-                                    radius: 500
-                                })
-
-                                var airQualitiy= L.circle([57.1290254259, -2.13552223973], {
+                            function draw(heat1,heat2) {
+                              
+                                var airQualitiy= L.circle([57.149472, -2.097698], {
                                     color: 'green',
                                     fillColor: 'green',
                                     fillOpacity: 0.5,
                                     radius: 3000
                                 })
 
-                               
+                            
                                 // Assign the heat markers adn air quality to the layer control
                                 
                                 var overlays = {
-                                    "Traffic": heat,
-                                    "Air Qualitiy": airQualitiy,
-                                }
+                                    "Traffic": heat1,
+                                    "Air Qualitiy": airQualitiy
+                                };
   
+                                var control = L.control.layers(null,overlays)
                                 //Add layer control 
-                                L.control.layers(null, overlays).addTo(map);
 
-                                var slider = document.getElementById('slider');
-                                noUiSlider.create(slider, {
-                                    start: 1,
-                                    tooltips: true,
-                                    connect: 'lower',
-                                    range: {
-                                        'min': 0,
-                                        'max': 10
-                                    }
-                                });
+                                control.addTo(map);
 
                             }
 
+
+
+                        
+     
 
                         </script>
                     </div>
                 </div>
             </div>
-            <p></p>
-            <p></p>
-            <div id="slider"></div>
+            
         </div>
     </div>
 
