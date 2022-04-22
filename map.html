@@ -30,26 +30,20 @@
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
 </head>
 
+
+
 <body id="body">
+
     <!--NavBar-->
-    <header>
-        <nav>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="map.html">Map</a></li>
-          </ul>
-        </nav>
-        <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
-          <div class="bar1"></div>
-          <div class="bar2"></div>
-          <div class="bar3"></div>
-          <ul class="mobile-menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="map.html">Products</a></li>
-          </ul>
-        </div>
-      </header>
-      <script src="index.js"></script>
+
+    <nav class="w3-bar w3-black w3-card">
+        <!-- Brand/logo -->
+        <a class="navbar-brand " href="#"></a>
+        <!-- Links -->
+        <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+        <a href="map.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Map</a>
+        <button onclick="darkMode()" id="darkButton">Darkmode</button>
+    </nav>
 
 
     <!--  SCript for getting dark mode on site -->
@@ -60,7 +54,6 @@
 
         }
     </script>
-
 
     <hr>
     <!-- Start Of conatiner for Map-->
