@@ -2,13 +2,15 @@
 <html lang="en">
 
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Aberdeen Traffic Viewer</title>
     
         <!--- Styles -->
         <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="styles.css">
+
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/
@@ -23,16 +25,22 @@
     
     <body id="body">
     
-        <!--NavBar-->
-    
-        <nav class="w3-bar w3-black w3-card">
-            <!-- Brand/logo -->
-            <a class="navbar-brand " href="#"></a>
-            <!-- Links -->
-            <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
-            <a href="map.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Map</a>
-            <button onclick="darkMode()" id="darkButton">Darkmode</button>
+        <!-- Navigation bar -->
+    <header class="header">
+        <!-- Logo -->
+        <a href="index.html" class="logo">ATV</a>
+        <!-- Hamburger icon -->
+        <input class="side-menu" type="checkbox" id="side-menu"/>
+        <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
+        <!-- Menu -->
+        <nav class="nav">
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="map.html">Map</a> </li>
+            </ul>
         </nav>
+    </header>
+    <!-- Main content -->
     
     
         <!--  SCript for getting dark mode on site -->

@@ -34,16 +34,22 @@
 
 <body id="body">
 
-    <!--NavBar-->
-
-    <nav class="w3-bar w3-black w3-card">
-        <!-- Brand/logo -->
-        <a class="navbar-brand " href="#"></a>
-        <!-- Links -->
-        <a href="index.html" class="w3-bar-item w3-button w3-padding-large">HOME</a>
-        <a href="map.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Map</a>
-        <button onclick="darkMode()" id="darkButton">Darkmode</button>
-    </nav>
+         <!-- Navigation bar -->
+         <header class="header">
+            <!-- Logo -->
+            <a href="index.html" class="logo">ATV</a>
+            <!-- Hamburger icon -->
+            <input class="side-menu" type="checkbox" id="side-menu"/>
+            <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
+            <!-- Menu -->
+            <nav class="nav">
+                <ul class="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="map.html">Map</a> </li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Main content -->
 
 
     <!--  SCript for getting dark mode on site -->
