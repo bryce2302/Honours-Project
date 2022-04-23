@@ -28,7 +28,8 @@
     #homepageStyle .row {
         display: flex;
     }
-    
+
+  
     #homepageStyle .row>.col-md-6 {
         flex: 1;
         border: 0.5px solid grey;
