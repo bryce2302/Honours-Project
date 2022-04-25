@@ -1,0 +1,32 @@
+body{
+    background-color: #181A1B;
+}
+
+p{
+    color: #FFF;
+}
+
+#homepageStyle p {
+    text-align: justify;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+#homepageStyle h2,h3 {
+    
+    color: #ffffff;
+
+}
+
+
+#homepageStyle .row>.col-md-6 {
+    flex: 1;
+    border: 0.5px solid grey;
+    background-color: #181A1B;
+}
+
+
+#homepageStyle {
+
+    background-color: #181A1B;
+}

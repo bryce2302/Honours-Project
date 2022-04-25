@@ -50,10 +50,14 @@
                     <a class="dropdown-item active" href="social.html">Social Links</a>
                   </div>
                 </li>
+              </ul>
+
+              <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                  <button onclick="darkMode()" id="darkButton">Darkmode</button>
+                  <input type="checkbox" id="check" onclick="changeStatus()">Activate Dark Mode</input>
                 </li>
               </ul>
+
               <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -61,14 +65,7 @@
             </div>
           </nav>
     
-        <!--  SCript for getting dark mode on site -->
-        <script>
-            function darkMode() {
-                var element = document.body;
-                element.classList.toggle("dark-mode");
-    
-            }
-        </script>
+       
 
     <hr>
 
@@ -136,5 +133,8 @@
 
 
 </body>
+
+<script src="./script.js"></script>
+
 
 </html>
