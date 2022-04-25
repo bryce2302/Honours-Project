@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
+
       <title>Aberdeen Traffic Viewer</title>
 
       <!--- Styles -->
@@ -25,7 +25,10 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-      
+      <script src="Bus_Facilities.geojson"></script>
+      <script src="Bus_Facilities.js"></script>
+     
+
    </head>
 
    <body id="body">
@@ -201,11 +204,18 @@
                              })
                              draw(heat2)
                          });
+                         
+
+                        
                      
                      
                      
                      function draw(heat1,heat2) {
-                       
+
+                    
+
+                        var bus = L.geoJson(data)
+
                          var airQualitiy= L.circle([57.149472, -2.097698], {
                              color: 'green',
                              fillColor: 'green',
@@ -218,7 +228,8 @@
                          
                          var overlays = {
                              "Traffic": heat1,
-                             "Air Qualitiy": airQualitiy
+                             "Air Qualitiy": airQualitiy,
+                             "Bus": bus
                          };
                      
                          var control = L.control.layers(null,overlays)
