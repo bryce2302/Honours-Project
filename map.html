@@ -1,297 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <title>Aberdeen Traffic Viewer</title>
 
+      <!--- Styles -->
+      <link rel="stylesheet" href="main.css">
+      <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aberdeen Traffic Viewer</title>
+      <!-- Scripts -->
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+      
+   </head>
 
-    <!--- Styles -->
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="styles.css">
-
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/
-css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
-
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
-  
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-</head>
-
-    
-    
-    <body id="body">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="index.html"> <img src="logo.png" alt="Aberdeen Traffic" id="logo"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+   <body id="body">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+         <a class="navbar-brand" href="index.html"> <img src="logo.png" alt="Aberdeen Traffic" id="logo"></a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+               <li class="nav-item">
                   <a class="nav-link" href="index.html">Home </a>
-                </li>
-                <li class="nav-item active">
+               </li>
+               <li class="nav-item active">
                   <a class="nav-link" href="map.html">Map<span class="sr-only">(current)</span></a></a>
-                </li>
-                <li class="nav-item dropdown">
+               </li>
+               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Contact Us
+                  Contact Us
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="email.html">Email</a>
-                    <a class="dropdown-item" href="social.html">Social Links</a>
+                     <a class="dropdown-item" href="email.html">Email</a>
+                     <a class="dropdown-item" href="social.html">Social Links</a>
                   </div>
-                </li>
-              </ul>
-
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+               </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+               <li class="nav-item">
                   <input type="checkbox" id="check" onclick="changeStatus()">Activate Dark Mode</input>
-                </li>
-              </ul>
+               </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+         </div>
+      </nav>
 
-              <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                
-              </form>
-            </div>
-          </nav>
+      <hr>
 
-    <hr>
-
-   <!-- Text about the page -->
-   <div class="container-fluid text-center">
-        <div class="row justify-content-center">
+      <!-- Text about the page -->
+      <div class="container-fluid text-center">
+         <div class="row justify-content-center">
             <div class="col-7" id="homepageStyle">
-                <h2>Map Visulisation</h2>
-                <p>Below you can find an interactive map, please use the map controller in the top right hand of the map to apply filters to the map.</p>
+               <h2>Map Visulisation</h2>
+               <p>Below you can find an interactive map, please use the map controller in the top right hand of the map to apply filters to the map.</p>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
 
-    <!-- Start Of conatiner for Map-->
-    <div class="container" id="mapContainer">
-        <div class="row">
+      <!-- Start Of conatiner for Map-->
+      <div class="container" id="mapContainer">
+         <div class="row">
             <div class="col-sm-12">
-                <div class="w3-content" id="mapStyle">
-                    <div id="map"></div>
-                        <hr>
-                        <a href="https://www.maptiler.com"
-                            style="position:absolute;left:10;bottom:10px;z-index:999;"><img
-                                src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
-                        <p><a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a
-                                href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap
-                                contributors</a>
-                        </p>
-                        <!-- Script for getting the map -->
-                        <script>
-                            var map = L.map('map').setView([57.1190254259, -2.13552223973], 1);
-
-                            //Adding tile layer
-                            L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=anuDqwGFecEjGf461O6C', {
-                                tileSize: 512,
-                                zoomOffset: -1,
-                                minZoom: 1,
-                                attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
-                                crossOrigin: true
-                            }).addTo(map);
-
-
-                            //Setting where the map begins at when loaded in 
-                            map.setView(new L.LatLng(57.146522, -2.099081), 13);
-                            
-
-                                // Read markers data from combined-csv-files.csv
-                                $.get('./Flow data - Union St/2019/combine.csv', function (csvString) {
-
-                                    // Use PapaParse to convert string to array of objects
-                                    var data = Papa.parse(csvString, {
-                                        header: true,
-                                        dynamicTyping: true
-                                    }).data;
-
-                                    // For each row in data, create a marker and add it to the map
-                                    // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
-                                    heat1Points = [];
-                                    for (var i in data) {
-                                        var row = data[i];
-                                        //Check if the row conatisn a Latitude
-                                        if (row.Latitude) {
-                                            console.table(data[i]);
-                                        
-                                            //Create three new variables to store the lat.long and amount from the csv at each row 
-                                            var lat = parseFloat(row.Latitude);
-                                            var lng = parseFloat(row.Longitude);
-                                            var amt = parseFloat(row.Amount);
-                                    
-                                        
-                                            //push these to the points array
-                                            heat1Points.push([lat, lng, amt]);
-           
-                                        }
-                                    }
-
-                                    var heat1 = L.heatLayer(heat1Points, {
-                                        gradient: {
-                                                0.00: 'rgb(0,0,255)',
-                                                0.25: 'rgb(0,0,255)',
-                                                0.50: 'rgb(0,255,0)',
-                                                0.75: 'rgb(255,255,0)',
-                                                1.00: 'rgb(255,0,0)'
-                                            },
-                                            opacity: 50,
-                                            blur: 15,
-                                            maxZoom: 15,
-                                            max: 250000,
-                                            radius: 50
-                                        })
-                                        draw(heat1)
-                                });
-
-                                // Read markers data from combined-csv-files.csv
-                                $.get('./Flow data - Union St/2020/combined-csv-files.csv', function (csvString) {
-
-                                // Use PapaParse to convert string to array of objects
-                                var data = Papa.parse(csvString, {
-                                    header: true,
-                                    dynamicTyping: true
-                                }).data;
-
-                                // For each row in data, create a marker and add it to the map
-                                // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
-                                heat2Points = [];
-                                for (var i in data) {
-                                    var row = data[i];
-                                    //Check if the row conatisn a Latitude
-                                    if (row.Latitude) {
-                                        console.table(data[i]);
-                                    
-                                        //Create three new variables to store the lat.long and amount from the csv at each row 
-                                        var lat = parseFloat(row.Latitude);
-                                        var lng = parseFloat(row.Longitude);
-                                        var amt = parseFloat(row.Amount);
-
-                                    
-                                        //push these to the points array
-                                        heat2Points.push([lat, lng, amt]);
-
-                                    }
-                                }
-
-                                var heat2 = L.heatLayer(heat2Points, {
-                                    gradient: {
-                                            0.00: 'rgb(0,0,255)',
-                                            0.25: 'rgb(0,0,255)',
-                                            0.50: 'rgb(0,255,0)',
-                                            0.75: 'rgb(255,255,0)',
-                                            1.00: 'rgb(255,0,0)'
-                                        },
-                                        opacity: 50,
-                                        blur: 15,
-                                        maxZoom: 15,
-                                        max: 250000,
-                                        radius: 50
-                                    })
-                                    draw(heat2)
-                                });
-
-                        
-                           
-                            function draw(heat1,heat2) {
-                              
-                                var airQualitiy= L.circle([57.149472, -2.097698], {
-                                    color: 'green',
-                                    fillColor: 'green',
-                                    fillOpacity: 0.5,
-                                    radius: 3000
-                                })
-
-                            
-                                // Assign the heat markers adn air quality to the layer control
-                                
-                                var overlays = {
-                                    "Traffic": heat1,
-                                    "Air Qualitiy": airQualitiy
-                                };
-  
-                                var control = L.control.layers(null,overlays)
-                                //Add layer control 
-
-                                control.addTo(map);
-
-                            }
-
-
-
-                        
-     
-
-                        </script>
-                    </div>
-                </div>
+               <div class="w3-content" id="mapStyle">
+                  <div id="map"></div>
+                  <hr>
+                  <a href="https://www.maptiler.com"
+                     style="position:absolute;left:10;bottom:10px;z-index:999;"><img
+                     src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"></a>
+                  <p><a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a
+                     href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap
+                     contributors</a>
+                  </p>
+                  <!-- Script for getting the map -->
+                  <script>
+                     var map = L.map('map').setView([57.1190254259, -2.13552223973], 1);
+                     
+                     //Adding tile layer
+                     L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=anuDqwGFecEjGf461O6C', {
+                         tileSize: 512,
+                         zoomOffset: -1,
+                         minZoom: 1,
+                         attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+                         crossOrigin: true
+                     }).addTo(map);
+                     
+                     
+                     //Setting where the map begins at when loaded in 
+                     map.setView(new L.LatLng(57.146522, -2.099081), 13);
+                     
+                     
+                         // Read markers data from combined-csv-files.csv
+                         $.get('./Flow data - Union St/2019/combine.csv', function (csvString) {
+                     
+                             // Use PapaParse to convert string to array of objects
+                             var data = Papa.parse(csvString, {
+                                 header: true,
+                                 dynamicTyping: true
+                             }).data;
+                     
+                             // For each row in data, create a marker and add it to the map
+                             // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
+                             heat1Points = [];
+                             for (var i in data) {
+                                 var row = data[i];
+                                 //Check if the row conatisn a Latitude
+                                 if (row.Latitude) {
+                                     console.table(data[i]);
+                                 
+                                     //Create three new variables to store the lat.long and amount from the csv at each row 
+                                     var lat = parseFloat(row.Latitude);
+                                     var lng = parseFloat(row.Longitude);
+                                     var amt = parseFloat(row.Amount);
+                             
+                                 
+                                     //push these to the points array
+                                     heat1Points.push([lat, lng, amt]);
+                     
+                                 }
+                             }
+                     
+                             var heat1 = L.heatLayer(heat1Points, {
+                                 gradient: {
+                                         0.00: 'rgb(0,0,255)',
+                                         0.25: 'rgb(0,0,255)',
+                                         0.50: 'rgb(0,255,0)',
+                                         0.75: 'rgb(255,255,0)',
+                                         1.00: 'rgb(255,0,0)'
+                                     },
+                                     opacity: 50,
+                                     blur: 15,
+                                     maxZoom: 15,
+                                     max: 250000,
+                                     radius: 50
+                                 })
+                                 draw(heat1)
+                         });
+                     
+                         // Read markers data from combined-csv-files.csv
+                         $.get('./Flow data - Union St/2020/combined-csv-files.csv', function (csvString) {
+                     
+                         // Use PapaParse to convert string to array of objects
+                         var data = Papa.parse(csvString, {
+                             header: true,
+                             dynamicTyping: true
+                         }).data;
+                     
+                         // For each row in data, create a marker and add it to the map
+                         // For each row, columns `Latitude`, `Longitude`, and `Amount` are required
+                         heat2Points = [];
+                         for (var i in data) {
+                             var row = data[i];
+                             //Check if the row conatisn a Latitude
+                             if (row.Latitude) {
+                                 console.table(data[i]);
+                             
+                                 //Create three new variables to store the lat.long and amount from the csv at each row 
+                                 var lat = parseFloat(row.Latitude);
+                                 var lng = parseFloat(row.Longitude);
+                                 var amt = parseFloat(row.Amount);
+                     
+                             
+                                 //push these to the points array
+                                 heat2Points.push([lat, lng, amt]);
+                     
+                             }
+                         }
+                     
+                         var heat2 = L.heatLayer(heat2Points, {
+                             gradient: {
+                                     0.00: 'rgb(0,0,255)',
+                                     0.25: 'rgb(0,0,255)',
+                                     0.50: 'rgb(0,255,0)',
+                                     0.75: 'rgb(255,255,0)',
+                                     1.00: 'rgb(255,0,0)'
+                                 },
+                                 opacity: 50,
+                                 blur: 15,
+                                 maxZoom: 15,
+                                 max: 250000,
+                                 radius: 50
+                             })
+                             draw(heat2)
+                         });
+                     
+                     
+                     
+                     function draw(heat1,heat2) {
+                       
+                         var airQualitiy= L.circle([57.149472, -2.097698], {
+                             color: 'green',
+                             fillColor: 'green',
+                             fillOpacity: 0.5,
+                             radius: 3000
+                         })
+                     
+                     
+                         // Assign the heat markers adn air quality to the layer control
+                         
+                         var overlays = {
+                             "Traffic": heat1,
+                             "Air Qualitiy": airQualitiy
+                         };
+                     
+                         var control = L.control.layers(null,overlays)
+                         //Add layer control 
+                     
+                         control.addTo(map);
+                     
+                     }
+                     
+                  </script>
+               </div>
             </div>
-            
-        </div>
-    </div>
-    <hr>
+         </div>
+      </div>
+      </div>
 
-    <footer class="page-footer">
+      <hr>
+      
+      <footer class="page-footer">
+         <!-- Footer Content-->
+         <div class="container-fluid text-center">
+         <div class="row justify-content-center">
+         <div class="col-4">
+         <a class="fa fa-facebook w3-hover-opacity" href="https://www.facebook.com/bryce.dawson.526/"></a>
+         <a class="fa fa-instagram w3-hover-opacity" href="https://www.instagram.com/bryce_2302/?hl=en"></a>
+         <a class="fa fa-twitter w3-hover-opacity"  href="https://twitter.com/bryce_2302"></a>
+         <!-- Footer Content -->
+         <!-- Copyright -->
+         <div class="footer-copyright text-center py-3">
+            <p>© 2022</p>
+            <a href="index.html"> Aberdeen Traffic Viewer</a>
+            </di v>
+            </di v>
+            </di v>
+         </div>
+      </footer>
+      <!-- Footer End -->
 
-        <!-- Footer Content-->
-        <div class="container-fluid text-center">
-            <div class="row justify-content-center">
-                <div class="col-4">
-
-
-                    <a class="fa fa-facebook w3-hover-opacity" href="https://www.facebook.com/bryce.dawson.526/"></a>
-
-                    <a class="fa fa-instagram w3-hover-opacity" href="https://www.instagram.com/bryce_2302/?hl=en"></a>
-
-                    <a class="fa fa-twitter w3-hover-opacity"  href="https://twitter.com/bryce_2302"></a>
-                   
-
-                    <!-- Footer Content -->
-
-                    <!-- Copyright -->
-                    <div class="footer-copyright text-center py-3">
-                        <p>© 2022</p>
-                        <a href="index.html"> Aberdeen Traffic Viewer</a>
-                        </di v>
-                        </di v>
-                        </di v>
-
-                    </div>
-                    </footer>
-
-
-                    <!-- Footer End -->
-
-
-</body>
-
-<script src="./script.js"></script>
-
+   </body>
+   <script src="./script.js"></script>
 </html>
