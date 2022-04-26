@@ -227,7 +227,7 @@
                             weight: 1,
                             opacity: 1,
                             fillOpacity: 1,
-                            color: "#ff00ee",
+                            color: "#000",
                             fillColor: "#ff7800"
                         }
 
@@ -241,20 +241,7 @@
                         const bus = L.geoJson(data, {
                             onEachFeature: function (feature, layer){
 
-                                const popupContent = 
-                                '<h4 class = "text-primary">Bus Stop</h4>' +
-                                '<div class="container"><table class="table table-striped">' +
-                                "<tbody><tr><td> Road Name </td><td>" +
-                                feature.properties.ROADNAME +
-                                "</td></tr>" +
-                                "<tr><td>Position </td><td>" +
-                                feature.properties.POSITION +
-                                "</td></tr>" +
-                                "<tr><td> Raised Kerb Y/N </td><td>" +
-                                feature.properties.RAISEDKERB +
-                                "</td></tr>";
-
-                                layer.bindPopup(popupContent);
+                               
                             },
                             pointToLayer: function (feature, LatLng){
                                 return markers.addLayer (L.circleMarker(LatLng, geoJsonMarker))
