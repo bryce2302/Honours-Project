@@ -8,10 +8,10 @@
       <title>Aberdeen Traffic Viewer</title>
 
       <!--- Styles -->
-      <link rel="stylesheet" href="main.css">
-      <link rel="stylesheet" href="styles.css">
-      <link rel="stylesheet" href="dist/MarkerCluster.css">
-      <link rel="stylesheet" href="dist/MarkerCluster.Default.css">
+      <link rel="stylesheet" href="/CSS/main.css">
+      <link rel="stylesheet" href="/CSS/styles.css">
+      <link rel="stylesheet" href="/dist/MarkerCluster.css">
+      <link rel="stylesheet" href="/dist/MarkerCluster.Default.css">
 
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -28,9 +28,9 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-      <script src="Bus_Facilities.js"></script>
-      <script src="Recycling_Points.js"></script>
-      <script src="dist/leaflet.markercluster.js"></script>
+      <script src="/javascript/Bus_Facilities.js"></script>
+      <script src="/javascript/Recycling_Points.js"></script>
+      <script src="/dist/leaflet.markercluster.js"></script>
 
      
 
@@ -38,7 +38,7 @@
 
    <body id="body">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-         <a class="navbar-brand" href="index.html"> <img src="logo.png" alt="Aberdeen Traffic" id="logo"></a>
+         <a class="navbar-brand" href="index.html"> <img src="/images/logo.png" alt="Aberdeen Traffic" id="logo"></a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
          </button>
@@ -121,7 +121,7 @@
                      
                      
                          // Read markers data from combined-csv-files.csv
-                         $.get('./Flow data - Union St/2019/combine.csv', function (csvString) {
+                         $.get('/Flow data - Union St/2019/combine.csv', function (csvString) {
                      
                              // Use PapaParse to convert string to array of objects
                              var data = Papa.parse(csvString, {
@@ -168,7 +168,7 @@
                          });
                      
                          // Read markers data from combined-csv-files.csv
-                         $.get('./Flow data - Union St/2020/combined-csv-files.csv', function (csvString) {
+                         $.get('/Flow data - Union St/2020/combined-csv-files.csv', function (csvString) {
                      
                          // Use PapaParse to convert string to array of objects
                          var data = Papa.parse(csvString, {
@@ -299,7 +299,7 @@
          <!-- Copyright -->
          <div class="footer-copyright text-center py-3">
             <p>© 2022</p>
-            <a href="index.html"> Aberdeen Traffic Viewer</a>
+            <a href="/pages/index.html"> Aberdeen Traffic Viewer</a>
             </di v>
             </di v>
             </di v>
@@ -308,5 +308,5 @@
       <!-- Footer End -->
 
    </body>
-   <script src="./script.js"></script>
+   <script src="/Javascript/script.js"></script>
 </html>
